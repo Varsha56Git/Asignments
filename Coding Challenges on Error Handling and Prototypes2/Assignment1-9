@@ -1,0 +1,271 @@
+/* 1. Double using callback.
+Write a function that takes in an array of integers and a callback function, and returns a new array where each
+element is doubled using the callback. */
+
+function doubleWithCallback(arr, callback) {
+    // Initialize an empty array to store the doubled values.
+    const doubledArray = [];
+  
+    // Iterate through the input array and apply the callback function to each element.
+    for (let i = 0; i < arr.length; i++) {
+      const doubledValue = callback(arr[i]);
+      doubledArray.push(doubledValue);
+    }
+  
+    return doubledArray;
+  }
+  
+  // Example callback function that doubles the input value.
+  function doubleValue(num) {
+    return num * 2;
+  }
+  
+  // Example usage:
+  const inputArray = [1, 2, 3, 4, 5];
+  const doubledResult = doubleWithCallback(inputArray, doubleValue);
+  
+  console.log(doubledResult); // Output: [2, 4, 6, 8, 10]
+
+  
+   /* 2. String Manipulation.
+Write a function “manipulateString” that takes in a string and converts the characters to uppercase letters. The
+function should return a callback function “logString” that logs the sentence “The manipulated string is: “ along
+with the manipulated string or the new string to the console.*/
+
+function manipulateString(inputString) {
+    // Convert the characters to uppercase.
+    const manipulatedString = inputString.toUpperCase();
+  
+    // Define the callback function logString.
+    function logString() {
+      console.log(`The manipulated string is: ${manipulatedString}`);
+    }
+  
+    // Return the logString callback function.
+    return logString;
+  }
+  
+  // Example usage:
+  const input = "Hello, World!";
+  const logStringCallback = manipulateString(input);
+  
+  // Now, you can call logStringCallback to log the manipulated string.
+  logStringCallback(); // Output: "The manipulated string is: HELLO, WORLD!"
+
+  /* 3. Age in Days.
+Write a JavaScript function called ageInDays that accepts an object containing a person's first name, last
+name, and age in years as input. The function should concatenate the first and last name into a single string
+and store it in a variable called fullName. It should then calculate the person's age in days and store it in a
+variable called ageInDays.
+The ageInDays function should then return a callback function that logs a message to the console. The
+message should include the person's full name and age in days, and should be in the format: "The person's full
+name is [full name] and their age in days is [age in days]."*/
+
+function ageInDays(person) {
+    // Concatenate the first and last name into a single string.
+    const fullName = `${person.firstName} ${person.lastName}`;
+  
+    // Calculate the age in days.
+    const ageInDays = person.age * 365; // Assuming an average of 365 days per year.
+  
+    // Define the callback function to log the message.
+    function logMessage() {
+      console.log(`The person's full name is ${fullName} and their age in days is ${ageInDays}.`);
+    }
+  
+    // Return the logMessage callback function.
+    return logMessage;
+  }
+  
+  // Example usage:
+  const personInfo = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30,
+  };
+  
+  const logMessageCallback = ageInDays(personInfo);
+  
+  // Now, you can call logMessageCallback to log the message to the console.
+  logMessageCallback(); // Output: "The person's full name is John Doe and their age in days is 10950."
+
+  /* 4. Arrange in alphabetical order.
+Write a program that accepts a list of objects representing books [ title, author, and year] and a callback
+function. The program should use the map function to create a new list containing only the titles of the books,
+and then pass this new list to the callback function. The callback function should then log the titles to the
+console in alphabetical order.*/
+
+// Sample list of book objects
+const books = [
+    { title: "The Great Gatsby", author: "F. Scott Fitzgerald", year: 1925 },
+    { title: "To Kill a Mockingbird", author: "Harper Lee", year: 1960 },
+    { title: "1984", author: "George Orwell", year: 1949 },
+    { title: "Pride and Prejudice", author: "Jane Austen", year: 1813 },
+    // Add more book objects as needed
+  ];
+  
+  // Define the callback function to log book titles in alphabetical order
+  function logBookTitlesInAlphabeticalOrder(titleList) {
+    const sortedTitles = titleList.sort(); // Sort the titles alphabetically
+    console.log("Book titles in alphabetical order:");
+    for (const title of sortedTitles) {
+      console.log(title);
+    }
+  }
+  
+  // Function to extract book titles and call the callback function
+  function extractBookTitlesAndLog(books, callback) {
+    const bookTitles = books.map(book => book.title);
+    callback(bookTitles);
+  }
+  
+  // Call the function to extract book titles and log them
+  extractBookTitlesAndLog(books, logBookTitlesInAlphabeticalOrder);
+
+  /* 5. Greeting Promise.
+You need to write a function that takes a name as input and returns a promise that resolves with a greeting
+message. The function should greet the person using their name, with a message in the format "Hello, {name}!".
+For example, if the input to the function is "Mithun", the promise should resolve with the string "Hello, Mithun!".*/
+
+function greetWithName(name) {
+    return new Promise((resolve, reject) => {
+      if (name) {
+        const greetingMessage = `Hello, ${name}!`;
+        resolve(greetingMessage);
+      } else {
+        reject("Name is missing. Please provide a name.");
+      }
+    });
+  }
+  
+  // Example usage:
+  const name = "Mithun";
+  greetWithName(name)
+    .then(message => {
+      console.log(message); // Output: "Hello, Mithun!"
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+
+  /* 6. Fetch results asynchronously.
+Write a function that asynchronously fetches data from an API
+[ https://jsonplaceholder.typicode.com/todos/1 ]and logs the result to the console.*/
+
+function fetchDataFromAPI() {
+    const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+  
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Data fetched from the API:', data);
+      })
+      .catch(error => {
+        console.error('An error occurred:', error);
+      });
+  }
+  
+  // Call the function to fetch and log data from the API
+  fetchDataFromAPI();
+
+  /* 7. Multiple requests.
+Create an asynchronous function that retrieves data from two different API endpoints: "https://
+jsonplaceholder.typicode.com/todos/1" and "https://jsonplaceholder.typicode.com/posts/1". The first API returns
+a to-do task, while the second API provides post details. The function should combine the results from both APIs
+and log them as an object, where the keys are "todo" and "post", and the corresponding values are the
+responses from the respective APIs.*/
+
+async function fetchDataFromMultipleAPIs() {
+    const todoUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+    const postUrl = 'https://jsonplaceholder.typicode.com/posts/1';
+  
+    try {
+      const [todoResponse, postResponse] = await Promise.all([
+        fetch(todoUrl),
+        fetch(postUrl),
+      ]);
+  
+      if (!todoResponse.ok || !postResponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const [todoData, postData] = await Promise.all([
+        todoResponse.json(),
+        postResponse.json(),
+      ]);
+  
+      const combinedData = {
+        todo: todoData,
+        post: postData,
+      };
+  
+      console.log('Combined data from both APIs:', combinedData);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
+  
+  // Call the function to fetch and log data from both APIs
+  fetchDataFromMultipleAPIs();
+
+  /* 8. Get Data from API and Display it on the browser console.
+Write a JavaScript program that uses the Fetch method to retrieve data from an API, and then logs the data to
+the console. For example, you could use the API at https://jsonplaceholder.typicode.com/posts to retrieve a list
+of posts, and then display them to the browser console.*/
+const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Data retrieved from the API:');
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('An error occurred:', error);
+  });
+
+  /* 9. Error Handling
+Write a JavaScript program that uses the Fetch method to retrieve data from an API, and then handles errors
+that may occur. For example, you could use the API at https://jsonplaceholder.typicode.com/posts/123456789
+to simulate an error, and then display an error message on the webpage.*/
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch API Example</title>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script>
+        const apiUrl = 'https://jsonplaceholder.typicode.com/posts/123456789';
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const contentDiv = document.getElementById('content');
+                contentDiv.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                const contentDiv = document.getElementById('content');
+                contentDiv.textContent = `An error occurred: ${error.message}`;
+            });
+    </script>
+</body>
+</html>
